@@ -1,6 +1,7 @@
 import 'package:academy/core/themes/app_color.dart';
 import 'package:academy/features/students/ui/widgets/add_student.dart';
 import 'package:academy/features/students/ui/widgets/searche_bar.dart';
+import 'package:academy/features/students/ui/widgets/show_students.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -34,7 +35,7 @@ class Students extends StatelessWidget {
 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [AddStudent(), SearcheBar()],
+              children: [AddStudent(), SearcheBar(), ShowStudents()],
             ),
           ),
         ),
