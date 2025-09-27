@@ -1,3 +1,4 @@
+import 'package:academy/core/helpers/snack_bar_helper.dart';
 import 'package:academy/features/students/data/models/student_model.dart';
 import 'package:academy/features/students/logic/cubit/student_cubit.dart';
 import 'package:flutter/material.dart';
@@ -115,8 +116,10 @@ class _EditStudentDialogState extends State<EditStudentDialog> {
 
             Navigator.pop(context);
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Student updated successfully!")),
+            SnackBarHelper.show(
+              context,
+              'Student updated successfully!',
+              type: SnackBarType.success,
             );
           },
           child: const Text("Update"),

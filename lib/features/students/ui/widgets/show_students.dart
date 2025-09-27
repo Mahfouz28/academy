@@ -1,4 +1,5 @@
 import 'package:academy/core/helpers/navigat.dart';
+import 'package:academy/core/helpers/snack_bar_helper.dart';
 import 'package:academy/core/router/routs.dart';
 import 'package:academy/core/themes/app_color.dart';
 import 'package:academy/core/widgets/custom_action_button.dart';
@@ -60,15 +61,16 @@ class ShowStudents extends StatelessWidget {
         }
         if (state is DeleteStudentSuccess) {
           context.pushReplacementNamed(Routes.students);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Student deleted successfully!')),
+
+          SnackBarHelper.show(
+            context,
+            'Student deleted successfully!',
+            type: SnackBarType.success,
           );
         }
         if (state is GetStudentsSuccess) {
         } else if (state is GetStudentsFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to load students: ${state.error}')),
-          );
+          SnackBarHelper.show(context, state.error, type: SnackBarType.error);
         }
       },
       builder: (context, state) {
