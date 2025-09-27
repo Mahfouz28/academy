@@ -1,4 +1,3 @@
-import 'package:academy/core/helpers/navigat.dart';
 import 'package:academy/core/themes/app_color.dart';
 import 'package:academy/features/students/logic/cubit/student_cubit.dart';
 import 'package:flutter/material.dart';

@@ -12,6 +12,44 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShowStudents extends StatelessWidget {
   const ShowStudents({super.key});
+  Color getBeltColor(String beltLevel) {
+    switch (beltLevel) {
+      case "White":
+        return Colors.white;
+      case "Yellow":
+      case "Yellow 2":
+        return Colors.yellow;
+      case "Orange":
+      case "Orange 2":
+        return Colors.orange;
+      case "Green":
+      case "Green 2":
+        return Colors.green;
+      case "Blue":
+      case "Blue 2":
+        return Colors.blue;
+      case "Brown":
+      case "Brown 2":
+        return Colors.brown;
+      case "Black":
+        return Colors.black;
+      default:
+        return Colors.grey; // fallback color
+    }
+  }
+
+  Color getSubscriptionColor(String subscriptionStatus) {
+    switch (subscriptionStatus) {
+      case "pending":
+        return Colors.orange;
+      case "active":
+        return Colors.green;
+      case "expired":
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,15 +138,27 @@ class ShowStudents extends StatelessWidget {
                       badges: [
                         StatusBadge(
                           text: student.beltLevel,
-                          backgroundColor: Colors.blue.withOpacity(.3),
-                          borderColor: Colors.blue,
-                          textColor: Colors.blue.shade200,
+                          backgroundColor: getBeltColor(
+                            student.beltLevel,
+                          ).withOpacity(0.3),
+                          borderColor: getBeltColor(student.beltLevel),
+                          textColor:
+                              getBeltColor(
+                                    student.beltLevel,
+                                  ).computeLuminance() >
+                                  0.5
+                              ? Colors.black
+                              : Colors.white,
                         ),
                         StatusBadge(
                           text: student.subscriptionStatus,
-                          backgroundColor: Colors.greenAccent.withOpacity(.3),
-                          borderColor: Colors.green,
-                          textColor: Colors.green.shade200,
+                          backgroundColor: getSubscriptionColor(
+                            student.subscriptionStatus,
+                          ).withOpacity(.3),
+                          borderColor: getSubscriptionColor(
+                            student.subscriptionStatus,
+                          ),
+                          textColor: Colors.white,
                         ),
                       ],
                       editButton: CustomActionButton(
@@ -138,8 +188,29 @@ class ShowStudents extends StatelessWidget {
                         icon: Icons.delete,
                         text: null,
                         onPressed: () {
-                          context.read<StudentCubit>().deleteStudent(
-                            student.id,
+                          showDialog(
+                            context: context,
+                            builder: (dialogContext) => AlertDialog(
+                              title: const Text("Delete Student"),
+                              content: const Text(
+                                "Are you sure you want to delete this student?",
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(dialogContext),
+                                  child: const Text("Cancel"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    context.read<StudentCubit>().deleteStudent(
+                                      student.id,
+                                    );
+                                    Navigator.pop(dialogContext);
+                                  },
+                                  child: const Text("Delete"),
+                                ),
+                              ],
+                            ),
                           );
                         },
                       ),

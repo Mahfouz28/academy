@@ -63,15 +63,4 @@ class Student {
       createdAt: createdAt ?? this.createdAt,
     );
   }
-
-  @override
-  List<Object?> get props => [
-    id,
-    name,
-    phone,
-    age,
-    beltLevel,
-    subscriptionStatus,
-    createdAt,
-  ];
 }
