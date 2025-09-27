@@ -1,31 +1,61 @@
+import 'package:academy/features/students/data/models/student_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupanaseRepo {
+  final student = Student;
   final supabase = Supabase.instance.client;
-
+  // to add new student
   Future<String?> insertStudent({
     required String name,
-    String? phone,
+    required String phone,
     required int age,
-    String beltLevel = 'White',
-    String subscriptionStatus = 'pending',
+    required String beltLevel,
+    required String subscriptionStatus,
   }) async {
-    final response = await supabase.rpc(
-      'insert_student', // Name of the function in Supabase
-      params: {
-        'p_name': name,
-        'p_phone': phone,
-        'p_age': age,
-        'p_belt_level': beltLevel,
-        'p_subscription_status': subscriptionStatus,
-      },
-    );
+    try {
+      final response = await supabase.rpc(
+        'insert_student',
+        params: {
+          'p_name': name,
+          'p_phone': phone,
+          'p_age': age,
+          'p_belt_level': beltLevel,
+          'p_subscription_status': subscriptionStatus,
+        },
+      );
 
-    if (response.error != null) {
-      print('Error inserting student: ${response.error!.message}');
+      return response as String?;
+    } catch (e) {
+      print('Error inserting student: $e');
       return null;
     }
+  }
 
-    return response.data as String?;
+  // to get all student
+  Future<List<Student>> getStudents() async {
+    final student = await supabase
+        .from('students')
+        .select()
+        .order('created_at');
+
+    return student.map((e) => Student.fromJson(e)).toList();
+  }
+
+  //Delete Student
+  Future<void> deleteStudent(String id) async {
+    await supabase.from('students').delete().eq('id', id);
+  }
+
+  Future<void> updateStudent(Student student) async {
+    await supabase
+        .from('students')
+        .update({
+          'name': student.name,
+          'phone': student.phone,
+          'age': student.age,
+          'belt_level': student.beltLevel,
+          'subscription_status': student.subscriptionStatus,
+        })
+        .eq('id', student.id);
   }
 }

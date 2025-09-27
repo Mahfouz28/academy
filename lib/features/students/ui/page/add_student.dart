@@ -1,101 +1,143 @@
+import 'package:academy/core/helpers/navigat.dart';
 import 'package:academy/core/themes/app_color.dart';
+import 'package:academy/features/students/logic/cubit/student_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddStudent extends StatefulWidget {
   const AddStudent({super.key});
 
   @override
-  State<AddStudent> createState() => _AddStudentState();
+  State<AddStudent> createState() => AddStudentState();
 }
 
-class _AddStudentState extends State<AddStudent> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _ageController = TextEditingController();
-  String _beltLevel = 'White';
-  String _subscriptionStatus = 'pending';
+class AddStudentState extends State<AddStudent> {
+  final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final ageController = TextEditingController();
+  String beltLevel = 'White';
+  String subscriptionStatus = 'pending';
 
   final List<String> beltLevels = [
-    'White',
-    'Yellow',
-    'Orange',
-    'Green',
-    'Blue',
-    'Brown',
-    'Black',
+    "White",
+    "Yellow",
+    "Yellow 2",
+    "Orange",
+    "Orange2",
+    "Green",
+    "Green 2",
+    "Blue",
+    "Blue 2",
+    "Brown",
+    "Brown 2",
+    "Black",
   ];
 
   final List<String> subscriptionStatuses = ['pending', 'active', 'expired'];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(title: const Text('Add Student')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              _buildTextField(_nameController, 'Name'),
-              const SizedBox(height: 16),
-              _buildTextField(
-                _phoneController,
-                'Phone',
-                keyboardType: TextInputType.phone,
+    return BlocConsumer<StudentCubit, StudentState>(
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: AppColors.background,
+          appBar: AppBar(title: const Text('Add Student')),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: formKey,
+              child: ListView(
+                children: [
+                  buildTextField(nameController, 'Name'),
+                  const SizedBox(height: 16),
+                  buildTextField(
+                    phoneController,
+                    'Phone',
+                    keyboardType: TextInputType.phone,
+                  ),
+                  const SizedBox(height: 16),
+                  buildTextField(
+                    ageController,
+                    'Age',
+                    keyboardType: TextInputType.number,
+                  ),
+                  const SizedBox(height: 16),
+                  buildDropdown('Belt Level', beltLevel, beltLevels, (val) {
+                    setState(() {
+                      beltLevel = val!;
+                    });
+                  }),
+                  const SizedBox(height: 16),
+                  buildDropdown(
+                    'Subscription Status',
+                    subscriptionStatus,
+                    subscriptionStatuses,
+                    (val) {
+                      setState(() {
+                        subscriptionStatus = val!;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 32),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.accent,
+                      foregroundColor: AppColors.accentForeground,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                    ),
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        context.read<StudentCubit>().addStudent(
+                          nameController.text,
+                          phoneController.text,
+                          int.parse(ageController.text),
+                          beltLevel,
+                          subscriptionStatus,
+                        );
+                        print("Button clicked");
+                      }
+                    },
+                    child: const Text('Add Student'),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
-              _buildTextField(
-                _ageController,
-                'Age',
-                keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: 16),
-              _buildDropdown('Belt Level', _beltLevel, beltLevels, (val) {
-                setState(() {
-                  _beltLevel = val!;
-                });
-              }),
-              const SizedBox(height: 16),
-              _buildDropdown(
-                'Subscription Status',
-                _subscriptionStatus,
-                subscriptionStatuses,
-                (val) {
-                  setState(() {
-                    _subscriptionStatus = val!;
-                  });
-                },
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.accent,
-                  foregroundColor: AppColors.accentForeground,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // TODO: Call Supabase function here
-                    print('Name: ${_nameController.text}');
-                    print('Phone: ${_phoneController.text}');
-                    print('Age: ${_ageController.text}');
-                    print('Belt: $_beltLevel');
-                    print('Subscription: $_subscriptionStatus');
-                  }
-                },
-                child: const Text('Add Student'),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
+      listener: (context, state) {
+        if (state is AddLoading) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) =>
+                const Center(child: CircularProgressIndicator()),
+          );
+        } else if (state is Addsuccess) {
+          Navigator.of(context, rootNavigator: true).pop(); // يقفل الـ Dialog
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Student added successfully!')),
+          );
+          nameController.clear();
+          phoneController.clear();
+          ageController.clear();
+          setState(() {
+            beltLevel = 'White';
+            subscriptionStatus = 'pending';
+          });
+        } else if (state is AddFailure) {
+          Navigator.of(context, rootNavigator: true).pop(); // يقفل الـ Dialog
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to add student: ${state.error}')),
+          );
+        }
+      },
     );
   }
 
-  Widget _buildTextField(
+  Widget buildTextField(
     TextEditingController controller,
     String label, {
     TextInputType keyboardType = TextInputType.text,
@@ -126,7 +168,7 @@ class _AddStudentState extends State<AddStudent> {
     );
   }
 
-  Widget _buildDropdown(
+  Widget buildDropdown(
     String label,
     String currentValue,
     List<String> items,
