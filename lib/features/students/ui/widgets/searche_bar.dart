@@ -1,5 +1,7 @@
 import 'package:academy/core/themes/app_color.dart';
+import 'package:academy/features/students/logic/cubit/student_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearcheBar extends StatelessWidget {
@@ -18,6 +20,9 @@ class SearcheBar extends StatelessWidget {
         border: Border.all(color: AppColors.border, width: 2),
       ),
       child: TextFormField(
+        onChanged: (value) {
+          context.read<StudentCubit>().searchStudents(value);
+        },
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.search, color: AppColors.accent),
           isDense: false,
