@@ -1,4 +1,5 @@
 import 'package:academy/core/router/routs.dart';
+import 'package:academy/features/attendance/ui/pages/attendance.dart';
 import 'package:academy/features/students/logic/cubit/student_cubit.dart';
 import 'package:academy/features/students/ui/page/add_student.dart';
 import 'package:academy/features/students/ui/page/students.dart';
@@ -15,6 +16,9 @@ class AppRouter {
             child: const AddStudent(),
           ),
         );
+
+      case Routes.attendance:
+        return MaterialPageRoute(builder: (_) => const Attendance());
 
       case Routes.students:
         return MaterialPageRoute(

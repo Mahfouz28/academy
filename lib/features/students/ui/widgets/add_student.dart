@@ -12,7 +12,14 @@ class AddStudent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Students'),
+        Text(
+          'Students',
+          style: TextStyle(
+            fontSize: 25,
+            color: AppColors.accent,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         Text(
           'Manage your karate academy students',
           style: TextStyle(fontWeight: FontWeight.w300, fontSize: 13.sp),
