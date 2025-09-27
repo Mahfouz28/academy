@@ -24,7 +24,7 @@ class AddStudentState extends State<AddStudent> {
     "Yellow",
     "Yellow 2",
     "Orange",
-    "Orange2",
+    "Orange 2",
     "Green",
     "Green 2",
     "Blue",

@@ -1,4 +1,5 @@
 import 'package:academy/core/themes/app_color.dart';
+import 'package:academy/core/widgets/drawer.dart';
 import 'package:academy/features/students/logic/cubit/student_cubit.dart';
 import 'package:academy/features/students/ui/widgets/add_student.dart';
 import 'package:academy/features/students/ui/widgets/searche_bar.dart';
@@ -24,7 +25,7 @@ class Students extends StatelessWidget {
         ),
         centerTitle: false,
       ),
-      drawer: const Drawer(child: Column(children: [])),
+      drawer: AcademyDrawer(),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
