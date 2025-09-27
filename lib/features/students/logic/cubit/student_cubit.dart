@@ -68,4 +68,20 @@ class StudentCubit extends Cubit<StudentState> {
       emit(UpdateStudentFailure(e.toString()));
     }
   }
+
+  // البحث
+  Future<void> searchStudents(String query) async {
+    if (query.isEmpty) {
+      getStudents();
+      return;
+    }
+
+    try {
+      final students = await repo.searchStudents(query);
+      emit(GetStudentsSuccess(students));
+    } catch (e) {
+      print('Error searching students: $e');
+      emit(GetStudentsFailure(e.toString()));
+    }
+  }
 }

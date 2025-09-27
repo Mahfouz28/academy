@@ -58,4 +58,19 @@ class SupanaseRepo {
         })
         .eq('id', student.id);
   }
+
+  //? serche
+  Future<List<Student>> searchStudents(String query) async {
+    final response =
+        await supabase
+                .from('students')
+                .select()
+                .or(
+                  'name.ilike.%$query%,phone.ilike.%$query%,subscription_status.ilike.%$query%,belt_level.ilike.%$query%',
+                )
+            as List<dynamic>;
+
+    final data = response;
+    return data.map((e) => Student.fromJson(e)).toList();
+  }
 }

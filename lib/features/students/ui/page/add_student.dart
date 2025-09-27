@@ -1,4 +1,4 @@
-import 'package:academy/core/helpers/navigat.dart';
+import 'package:academy/core/helpers/snack_bar_helper.dart';
 import 'package:academy/core/themes/app_color.dart';
 import 'package:academy/features/students/logic/cubit/student_cubit.dart';
 import 'package:flutter/material.dart';
@@ -116,9 +116,10 @@ class AddStudentState extends State<AddStudent> {
           );
         } else if (state is Addsuccess) {
           Navigator.of(context, rootNavigator: true).pop(); // يقفل الـ Dialog
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Student added successfully!')),
+          SnackBarHelper.show(
+            context,
+            'Student added successfully!',
+            type: SnackBarType.success,
           );
           nameController.clear();
           phoneController.clear();
@@ -129,9 +130,7 @@ class AddStudentState extends State<AddStudent> {
           });
         } else if (state is AddFailure) {
           Navigator.of(context, rootNavigator: true).pop(); // يقفل الـ Dialog
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to add student: ${state.error}')),
-          );
+          SnackBarHelper.show(context, state.error, type: SnackBarType.error);
         }
       },
     );
