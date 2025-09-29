@@ -1,3 +1,5 @@
+import 'package:academy/core/helpers/navigat.dart';
+import 'package:academy/core/router/routs.dart';
 import 'package:academy/core/themes/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +12,14 @@ class AddStudent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Students'),
+        Text(
+          'Students',
+          style: TextStyle(
+            fontSize: 25,
+            color: AppColors.accent,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         Text(
           'Manage your karate academy students',
           style: TextStyle(fontWeight: FontWeight.w300, fontSize: 13.sp),
@@ -27,7 +36,9 @@ class AddStudent extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.r),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              context.pushNamed(Routes.addStudent);
+            },
             child: Text(
               '+    Add Student',
               style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),

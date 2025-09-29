@@ -1,9 +1,12 @@
 import 'package:academy/core/themes/app_color.dart';
+import 'package:academy/core/widgets/drawer.dart';
+import 'package:academy/features/students/logic/cubit/student_cubit.dart';
 import 'package:academy/features/students/ui/widgets/add_student.dart';
 import 'package:academy/features/students/ui/widgets/searche_bar.dart';
 import 'package:academy/features/students/ui/widgets/show_students.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Students extends StatelessWidget {
   const Students({super.key});
@@ -22,20 +25,22 @@ class Students extends StatelessWidget {
         ),
         centerTitle: false,
       ),
-      drawer: const Drawer(child: Column(children: [
-
-            
-          ],
-          
-        )),
+      drawer: AcademyDrawer(),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(28.r),
-
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [AddStudent(), SearcheBar(), ShowStudents()],
+        child: RefreshIndicator(
+          onRefresh: () async {
+            context.read<StudentCubit>().getStudents();
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(28.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [AddStudent(), SearcheBar(), ShowStudents()],
+              ),
             ),
           ),
         ),
