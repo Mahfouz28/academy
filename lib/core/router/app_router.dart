@@ -2,6 +2,8 @@ import 'package:academy/core/router/routs.dart';
 import 'package:academy/features/attendance/logic/cubit/attendace_cubit.dart';
 import 'package:academy/features/attendance/ui/pages/show_attendace.dart';
 import 'package:academy/features/attendance/ui/pages/take_attendace.dart';
+import 'package:academy/features/dashboard/presentation/cubit/dashboard_cubit.dart';
+import 'package:academy/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:academy/features/students/logic/cubit/student_cubit.dart';
 import 'package:academy/features/students/ui/page/add_student.dart';
 import 'package:academy/features/students/ui/page/students.dart';
@@ -15,18 +17,14 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => StudentCubit(),
-            child: const AddStudent(),
+            child: AddStudent(),
           ),
         );
-
       case Routes.showAttendance:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => AttendanceCubit(),
-            child: BlocProvider(
-              create: (context) => AttendanceCubit(),
-              child: const AttendanceScreen(),
-            ),
+            child: AttendanceScreen(),
           ),
         );
 
@@ -34,7 +32,16 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => AttendanceCubit(),
-            child: const Attendance(),
+            child: Attendance(),
+          ),
+        );
+
+      case Routes.dashboard:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => DashboardCubit()..getAllStudents(),
+
+            child: DashboardPage(),
           ),
         );
 
@@ -42,9 +49,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => StudentCubit()..getStudents(),
-            child: const Students(),
+            child: Students(),
           ),
         );
+
       default:
         return MaterialPageRoute(builder: (_) => const Text('Error'));
     }

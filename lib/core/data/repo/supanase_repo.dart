@@ -100,4 +100,15 @@ class SupanaseRepo {
 
     return response;
   }
+
+  // get attindance students
+  Future<List<Map<String, dynamic>>> getAttendance() async {
+    final response = await supabase
+        .from('attendance')
+        .select()
+        .eq('date', DateTime.now().toIso8601String().split('T')[0]);
+    ;
+
+    return response;
+  }
 }
