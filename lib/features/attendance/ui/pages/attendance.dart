@@ -114,39 +114,37 @@ class _AttendanceState extends State<Attendance> {
                   ),
                   20.verticalSpace,
                   Center(
-                    child: SizedBox(
-                      width: 235.w,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Handle submit attendance logic here
-                          print('Attendance Submitted!');
-                          print('Present: $counterPresent');
-                          print('Absent: $counterAbsent');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 40.w,
-                            vertical: 12.h,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Handle submit attendance logic here
+                        print('Attendance Submitted!');
+                        print('Present: $counterPresent');
+                        print('Absent: $counterAbsent');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 40.w,
+                          vertical: 12.h,
                         ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.save, color: AppColors.card),
-                            12.horizontalSpace,
-                            Text(
-                              'Save Attendance',
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.card,
-                              ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.save, color: AppColors.card),
+                          12.horizontalSpace,
+                          Text(
+                            'Save Attendance',
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.card,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
