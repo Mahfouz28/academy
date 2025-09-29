@@ -9,8 +9,9 @@ class AttendCard extends StatelessWidget {
   final String belt;
   final bool isAttend;
   final bool isAbsent;
-  final VoidCallback onAttendTap;
-  final VoidCallback onAbsentTap;
+  final VoidCallback? onAttendTap;
+  final VoidCallback? onAbsentTap;
+  final Color statusBeltColor;
 
   const AttendCard({
     super.key,
@@ -18,8 +19,9 @@ class AttendCard extends StatelessWidget {
     required this.belt,
     this.isAttend = false,
     this.isAbsent = false,
-    required this.onAttendTap,
-    required this.onAbsentTap,
+    this.onAttendTap,
+    this.onAbsentTap,
+    required this.statusBeltColor,
   });
 
   @override
@@ -52,8 +54,8 @@ class AttendCard extends StatelessWidget {
                 ),
                 12.verticalSpace,
                 StatusBadge(
-                  backgroundColor: AppColors.chart3.withOpacity(.3),
-                  borderColor: AppColors.chart3,
+                  backgroundColor: statusBeltColor.withOpacity(.3),
+                  borderColor: statusBeltColor,
                   textColor: Colors.white,
                   text: belt,
                 ),

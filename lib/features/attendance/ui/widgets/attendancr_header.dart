@@ -1,7 +1,6 @@
 import 'package:academy/core/themes/app_color.dart';
 import 'package:academy/core/widgets/app_card.dart';
 import 'package:academy/core/widgets/status_badge.dart';
-import 'package:academy/features/attendance/ui/widgets/attendance_clinder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -51,7 +50,7 @@ class AttendancrHeader extends StatelessWidget {
               12.verticalSpace,
               Divider(color: AppColors.border, thickness: 2),
               30.verticalSpace,
-              AttendancePage(),
+
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 22.r),
                 child: Row(
