@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AttendancrHeader extends StatelessWidget {
-  const AttendancrHeader({super.key});
+  final int attend;
+  final int absent;
+
+  AttendancrHeader({super.key, required this.attend, required this.absent});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,7 @@ class AttendancrHeader extends StatelessWidget {
                     StatusBadge(
                       width: 90,
 
-                      text: 'Present: 1 ',
+                      text: 'Present: $attend',
                       backgroundColor: Colors.green.withOpacity(0.3),
                       borderColor: Colors.green,
                       textColor: Colors.white,
@@ -65,7 +68,7 @@ class AttendancrHeader extends StatelessWidget {
                     StatusBadge(
                       width: 90,
 
-                      text: 'Absent: 0 ',
+                      text: 'Absent: $absent',
                       backgroundColor: Colors.red.withOpacity(0.3),
                       borderColor: Colors.red,
                       textColor: Colors.white,
