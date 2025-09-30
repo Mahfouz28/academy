@@ -32,7 +32,21 @@ class AcademyDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.dashboard, color: AppColors.foreground),
+            leading: const Icon(Icons.payment, color: AppColors.foreground),
+            title: const Text(
+              'Subscriptions',
+              style: TextStyle(color: AppColors.foreground),
+            ),
+            onTap: () {
+              context.pushNamed(Routes.subscriptions);
+            },
+          ),
+
+          ListTile(
+            leading: const Icon(
+              Icons.dashboard_outlined,
+              color: AppColors.foreground,
+            ),
             title: const Text(
               'Dashboard',
               style: TextStyle(color: AppColors.foreground),

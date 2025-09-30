@@ -2,7 +2,7 @@ import 'package:academy/core/themes/app_color.dart';
 import 'package:academy/core/widgets/app_bar.dart';
 import 'package:academy/core/widgets/app_card.dart';
 import 'package:academy/core/widgets/drawer.dart';
-import 'package:academy/features/dashboard/presentation/widgets/dash_board_card.dart';
+import 'package:academy/core/widgets/show_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,7 +60,7 @@ class DashboardPage extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            DashBoardCard(
+                            ShowInfoCard(
                               title: 'Total\nStudents',
                               count: totalStudents.toString(),
                               icon: Icons.people,
@@ -70,7 +70,7 @@ class DashboardPage extends StatelessWidget {
                             ),
                             8.horizontalSpace,
 
-                            DashBoardCard(
+                            ShowInfoCard(
                               title: 'Attendance\ntoday',
 
                               count: attendanceTOday.length.toString(),
@@ -83,7 +83,7 @@ class DashboardPage extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            DashBoardCard(
+                            ShowInfoCard(
                               title: 'Active\nSubscriptions',
                               count: '5',
                               icon: Icons.payment,
@@ -92,7 +92,7 @@ class DashboardPage extends StatelessWidget {
                               iconBorderColor: AppColors.chart1,
                             ),
                             8.horizontalSpace,
-                            DashBoardCard(
+                            ShowInfoCard(
                               title: 'Expired\nSubscriptions',
                               count: '20',
                               icon: Icons.warning_amber_rounded,

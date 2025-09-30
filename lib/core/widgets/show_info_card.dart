@@ -3,14 +3,15 @@ import 'package:academy/features/dashboard/presentation/widgets/dash_bord_card_i
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class DashBoardCard extends StatelessWidget {
+class ShowInfoCard extends StatelessWidget {
+  final Color? countColor;
   final String title;
   final String count;
   final IconData icon;
   final Color iconColor;
   final Color iconBackgroundColor;
   final Color iconBorderColor;
-  const DashBoardCard({
+  const ShowInfoCard({
     super.key,
     required this.title,
     required this.count,
@@ -18,6 +19,7 @@ class DashBoardCard extends StatelessWidget {
     required this.iconColor,
     required this.iconBackgroundColor,
     required this.iconBorderColor,
+    this.countColor,
   });
 
   @override
@@ -31,12 +33,16 @@ class DashBoardCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w500,
+                  Flexible(
+                    child: Text(
+                      softWrap: true,
+                      title,
+                      style: TextStyle(
+                        overflow: TextOverflow.visible,
+                        color: Colors.grey,
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   const Spacer(),
@@ -48,7 +54,14 @@ class DashBoardCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Text(count),
+              Text(
+                count,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                  color: countColor,
+                ),
+              ),
             ],
           ),
         ),
