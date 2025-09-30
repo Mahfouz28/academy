@@ -1,5 +1,6 @@
 import 'package:academy/core/themes/app_color.dart';
 import 'package:academy/core/widgets/status_badge.dart';
+import 'package:academy/features/subscriptions/presentation/widgets/renew_botton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -96,37 +97,7 @@ class ShowSubsCard extends StatelessWidget {
             16.verticalSpace,
 
             // Renew Button
-            TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(padding: EdgeInsets.zero),
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 12.w),
-                decoration: BoxDecoration(
-                  color: AppColors.secondary,
-                  border: Border.all(color: AppColors.border),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.sync_rounded,
-                      color: AppColors.destructive,
-                      size: 18.sp,
-                    ),
-                    6.horizontalSpace,
-                    Text(
-                      'Renew Subscription',
-                      style: TextStyle(
-                        color: AppColors.destructive,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            RenewButton(),
           ],
         ),
       ),

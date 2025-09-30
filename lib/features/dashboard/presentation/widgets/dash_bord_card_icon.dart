@@ -26,10 +26,12 @@ class DashBordCardIcon extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: borderColor),
       ),
-      child: Center(child: Icon(icon, color: color, size: 20)),
+      child: Center(
+        child: Icon(icon, color: color, size: 16.sp),
+      ),
     );
   }
 }
