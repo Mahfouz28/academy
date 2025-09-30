@@ -7,6 +7,8 @@ import 'package:academy/features/dashboard/presentation/pages/dashboard_page.dar
 import 'package:academy/features/students/logic/cubit/student_cubit.dart';
 import 'package:academy/features/students/ui/page/add_student.dart';
 import 'package:academy/features/students/ui/page/students.dart';
+import 'package:academy/features/subscriptions/presentation/cubit/subscriptions_cubit.dart';
+import 'package:academy/features/subscriptions/presentation/pages/subscriptions_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,6 +35,14 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (context) => AttendanceCubit(),
             child: Attendance(),
+          ),
+        );
+
+      case Routes.subscriptions:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => SubscriptionsCubit(),
+            child: const SubscriptionsPage(),
           ),
         );
 
