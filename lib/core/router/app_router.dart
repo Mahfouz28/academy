@@ -64,7 +64,13 @@ class AppRouter {
         );
 
       default:
-        return MaterialPageRoute(builder: (_) => const Text('Error'));
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => DashboardCubit()..getAllStudents(),
+
+            child: DashboardPage(),
+          ),
+        );
     }
   }
 }
