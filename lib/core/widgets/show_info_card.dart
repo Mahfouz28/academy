@@ -32,25 +32,26 @@ class ShowInfoCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  Flexible(
-                    child: Text(
-                      softWrap: true,
-                      title,
-                      style: TextStyle(
-                        overflow: TextOverflow.visible,
-                        color: Colors.grey,
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  Text(
+                    softWrap: true,
+                    title,
+                    style: TextStyle(
+                      overflow: TextOverflow.visible,
+                      color: Colors.grey,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   const Spacer(),
-                  DashBordCardIcon(
-                    backgroundColor: iconBackgroundColor.withOpacity(0.3),
-                    borderColor: iconBorderColor,
-                    color: iconColor,
-                    icon: icon,
+                  Flexible(
+                    child: DashBordCardIcon(
+                      backgroundColor: iconBackgroundColor.withOpacity(0.3),
+                      borderColor: iconBorderColor,
+                      color: iconColor,
+                      icon: icon,
+                    ),
                   ),
                 ],
               ),
