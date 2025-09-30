@@ -122,8 +122,10 @@ class DashboardPage extends StatelessWidget {
                           Divider(thickness: 2, color: AppColors.border),
                           ListView.separated(
                             shrinkWrap: true,
-                            itemCount: 5,
-                            separatorBuilder: (_, __) =>
+                            itemCount: students.length > 5
+                                ? 5
+                                : students.length,
+                            separatorBuilder: (_, index) =>
                                 Divider(color: AppColors.border),
                             itemBuilder: (context, index) {
                               return Padding(
