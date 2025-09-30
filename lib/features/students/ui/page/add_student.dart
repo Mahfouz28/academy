@@ -115,7 +115,7 @@ class AddStudentState extends State<AddStudent> {
                 const Center(child: CircularProgressIndicator()),
           );
         } else if (state is Addsuccess) {
-          Navigator.of(context, rootNavigator: true).pop(); // يقفل الـ Dialog
+          Navigator.of(context, rootNavigator: true).pop();
           SnackBarHelper.show(
             context,
             'Student added successfully!',
@@ -129,7 +129,7 @@ class AddStudentState extends State<AddStudent> {
             subscriptionStatus = 'pending';
           });
         } else if (state is AddFailure) {
-          Navigator.of(context, rootNavigator: true).pop(); // يقفل الـ Dialog
+          Navigator.of(context, rootNavigator: true).pop();
           SnackBarHelper.show(context, state.error, type: SnackBarType.error);
         }
       },

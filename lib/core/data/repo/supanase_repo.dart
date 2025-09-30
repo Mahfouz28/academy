@@ -73,4 +73,42 @@ class SupanaseRepo {
     final data = response;
     return data.map((e) => Student.fromJson(e)).toList();
   }
+  //? Attendace insert
+
+  Future<void> insertAttendance({
+    required String studentId,
+    required DateTime date,
+    required String status,
+  }) async {
+    try {
+      await supabase.from('attendance').insert({
+        'student_id': studentId,
+        'date': date.toIso8601String(),
+        'status': status,
+      });
+    } catch (e) {
+      throw Exception('Error inserting attendance: $e');
+    }
+  }
+
+  // show attendance data
+  Future<List<Map<String, dynamic>>> getAttendanceByDate(String date) async {
+    final response = await supabase
+        .from('attendance')
+        .select('student_id, status, students(name, belt_level)')
+        .eq('date', date);
+
+    return response;
+  }
+
+  // get attindance students
+  Future<List<Map<String, dynamic>>> getAttendance() async {
+    final response = await supabase
+        .from('attendance')
+        .select()
+        .eq('date', DateTime.now().toIso8601String().split('T')[0]);
+    ;
+
+    return response;
+  }
 }
