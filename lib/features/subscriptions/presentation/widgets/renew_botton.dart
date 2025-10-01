@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RenewButton extends StatefulWidget {
-  const RenewButton({super.key});
+  final VoidCallback onPressed;
+  const RenewButton({super.key, required this.onPressed});
 
   @override
   State<RenewButton> createState() => _RenewButtonState();
@@ -13,7 +14,8 @@ class _RenewButtonState extends State<RenewButton> {
   bool _pressed = false;
 
   void _onTap() {
-    print('Renew Subscription button pressed');
+    widget.onPressed();
+
     setState(() {
       _pressed = !_pressed;
     });

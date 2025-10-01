@@ -44,19 +44,19 @@ flutter:
   assets:
     - assets/images/
 
-# 👇 config for app icon
+
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/appIcon.png"
+  image_path: "assets/images/appicon1.png"
   adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/images/appIcon.png"
+  adaptive_icon_foreground: "assets/images/appicon1.png"
 
 # 👇 config for splash screen
 flutter_native_splash:
-  color: "#FFFFFF"
-  image: assets/images/splashscreen.png
+  color: "#1F2937"
+  image: assets/images/appicon1.png
 
   android_12:
-    image: assets/images/logo.png
-    color: "#FFFFFF"
+    image: assets/images/appicon1.png
+    color: "#1F2937"

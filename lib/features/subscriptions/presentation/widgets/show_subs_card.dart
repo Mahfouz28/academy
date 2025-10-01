@@ -5,10 +5,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShowSubsCard extends StatelessWidget {
-  const ShowSubsCard({super.key});
+  final String studentId;
+  final VoidCallback onRenew;
+  final bool isLoading;
+
+  final String studentName;
+  final String status;
+  final DateTime startDate;
+  final DateTime endDate;
+  final int daysRemaining;
+  final double price;
+
+  const ShowSubsCard({
+    required this.isLoading,
+    required this.studentName,
+    required this.status,
+    required this.startDate,
+    required this.endDate,
+    required this.daysRemaining,
+    this.price = 140,
+    required this.studentId,
+    required this.onRenew,
+  });
+
+  Color _getStatusColor() {
+    switch (status) {
+      case 'active':
+        return Colors.green;
+      case 'expired':
+        return Colors.red;
+      case 'pending':
+        return Colors.orange;
+      default:
+        return AppColors.mutedForeground;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final statusColor = _getStatusColor();
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.card,
@@ -24,7 +60,7 @@ class ShowSubsCard extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Student Name',
+                  studentName,
                   style: TextStyle(
                     color: AppColors.foreground,
                     fontSize: 14.sp,
@@ -33,9 +69,10 @@ class ShowSubsCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 StatusBadge(
-                  backgroundColor: AppColors.chart2,
-                  borderColor: AppColors.chart2,
-                  textColor: AppColors.foreground,
+                  text: status.toUpperCase(),
+                  backgroundColor: statusColor.withOpacity(0.1),
+                  borderColor: statusColor,
+                  textColor: statusColor,
                 ),
               ],
             ),
@@ -44,7 +81,7 @@ class ShowSubsCard extends StatelessWidget {
 
             // Subscription price
             Text(
-              '\$ 140 / month',
+              '\$ $price / month',
               style: TextStyle(
                 color: AppColors.accent,
                 fontSize: 13.sp,
@@ -56,7 +93,7 @@ class ShowSubsCard extends StatelessWidget {
 
             // Dates
             Text(
-              'Start: ',
+              'Start: ${startDate.toString().split(' ')[0]}',
               style: TextStyle(
                 color: AppColors.mutedForeground,
                 fontSize: 12.sp,
@@ -64,7 +101,7 @@ class ShowSubsCard extends StatelessWidget {
             ),
             4.verticalSpace,
             Text(
-              'End: ',
+              'End: ${endDate.toString().split(' ')[0]}',
               style: TextStyle(
                 color: AppColors.mutedForeground,
                 fontSize: 12.sp,
@@ -84,7 +121,7 @@ class ShowSubsCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '20',
+                  '$daysRemaining',
                   style: TextStyle(
                     color: AppColors.chart3,
                     fontSize: 12.sp,
@@ -96,8 +133,8 @@ class ShowSubsCard extends StatelessWidget {
 
             16.verticalSpace,
 
-            // Renew Button
-            RenewButton(),
+            // Renew Button (only if expired or pending)
+            if (status != 'active') RenewButton(onPressed: onRenew),
           ],
         ),
       ),

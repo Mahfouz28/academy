@@ -45,13 +45,11 @@ class ShowInfoCard extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  Flexible(
-                    child: DashBordCardIcon(
-                      backgroundColor: iconBackgroundColor.withOpacity(0.3),
-                      borderColor: iconBorderColor,
-                      color: iconColor,
-                      icon: icon,
-                    ),
+                  DashBordCardIcon(
+                    backgroundColor: iconBackgroundColor.withOpacity(0.3),
+                    borderColor: iconBorderColor,
+                    color: iconColor,
+                    icon: icon,
                   ),
                 ],
               ),

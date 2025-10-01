@@ -41,8 +41,8 @@ class AppRouter {
       case Routes.subscriptions:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => SubscriptionsCubit(),
-            child: const SubscriptionsPage(),
+            create: (context) => SubscriptionsCubit()..getAllStudents(),
+            child: SubscriptionsPage(),
           ),
         );
 
@@ -64,7 +64,13 @@ class AppRouter {
         );
 
       default:
-        return MaterialPageRoute(builder: (_) => const Text('Error'));
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => DashboardCubit()..getAllStudents(),
+
+            child: DashboardPage(),
+          ),
+        );
     }
   }
 }

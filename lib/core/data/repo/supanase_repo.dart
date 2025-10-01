@@ -61,18 +61,22 @@ class SupanaseRepo {
 
   //? serche
   Future<List<Student>> searchStudents(String query) async {
-    final response =
-        await supabase
-                .from('students')
-                .select()
-                .or(
-                  'name.ilike.%$query%,phone.ilike.%$query%,subscription_status.ilike.%$query%,belt_level.ilike.%$query%',
-                )
-            as List<dynamic>;
+    try {
+      final response = await supabase
+          .from('students')
+          .select()
+          .or(
+            'name.ilike.%$query%,phone.ilike.%$query%,subscription_status.ilike.%$query%,belt_level.ilike.%$query%',
+          );
 
-    final data = response;
-    return data.map((e) => Student.fromJson(e)).toList();
+      return (response as List<dynamic>)
+          .map((e) => Student.fromJson(e))
+          .toList();
+    } catch (e) {
+      throw Exception("Error searching students: $e");
+    }
   }
+
   //? Attendace insert
 
   Future<void> insertAttendance({
@@ -107,8 +111,33 @@ class SupanaseRepo {
         .from('attendance')
         .select()
         .eq('date', DateTime.now().toIso8601String().split('T')[0]);
-    ;
 
     return response;
+  }
+
+  //renewSubscription
+  Future<void> renewSubscription(String studentId) async {
+    try {
+      final response = await supabase
+          .from('students')
+          .update({'subscription_status': 'active'})
+          .eq('id', studentId)
+          .select();
+
+      if (response.isEmpty) {
+        throw Exception("No student found with this ID");
+      }
+    } catch (e) {
+      throw Exception("Error renewing subscription: $e");
+    }
+  }
+
+  // get all expaierd subs
+  Future<List<Student>> getExpiredSubscriptions() async {
+    final response = await supabase
+        .from('students')
+        .select()
+        .eq('subscription_status', 'expired');
+    return response.map((e) => Student.fromJson(e)).toList();
   }
 }
