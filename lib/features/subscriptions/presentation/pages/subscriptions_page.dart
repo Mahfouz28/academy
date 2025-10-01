@@ -296,7 +296,6 @@ class SubscriptionsPage extends StatelessWidget {
                                   endDate: DateTime.now().add(
                                     const Duration(days: 30),
                                   ),
-                                  daysRemaining: 30,
                                   studentId: student.id,
                                   onRenew: () {
                                     context

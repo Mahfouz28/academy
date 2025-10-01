@@ -222,7 +222,7 @@ class _AttendanceState extends State<Attendance> {
                       onPressed: () {
                         context.pushNamed(Routes.showAttendance);
                       },
-                      child: const Text("how attindance"),
+                      child: const Text("Show attindance"),
                     ),
                   ],
                 ),

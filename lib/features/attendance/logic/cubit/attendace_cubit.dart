@@ -38,8 +38,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
 
   Future<void> saveAllAttendance({
     required DateTime date,
-    required Map<String, String>
-    studentStatusMap, // {studentId: "Present/Absent"}
+    required Map<String, String> studentStatusMap,
   }) async {
     emit(AttendanceLoading());
     try {

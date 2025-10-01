@@ -13,16 +13,17 @@ class ShowSubsCard extends StatelessWidget {
   final String status;
   final DateTime startDate;
   final DateTime endDate;
-  // final int daysRemaining;
+
   final double price;
 
   const ShowSubsCard({
+    super.key,
     required this.isLoading,
     required this.studentName,
     required this.status,
     required this.startDate,
     required this.endDate,
-    // required this.daysRemaining,
+
     this.price = 140,
     required this.studentId,
     required this.onRenew,
@@ -106,29 +107,6 @@ class ShowSubsCard extends StatelessWidget {
                 color: AppColors.mutedForeground,
                 fontSize: 12.sp,
               ),
-            ),
-
-            8.verticalSpace,
-
-            // Days remaining
-            Row(
-              children: [
-                Text(
-                  'Days remaining: ',
-                  style: TextStyle(
-                    color: AppColors.foreground,
-                    fontSize: 12.sp,
-                  ),
-                ),
-                // Text(
-                //   // '$daysRemaining',
-                //   style: TextStyle(
-                //     color: AppColors.chart3,
-                //     fontSize: 12.sp,
-                //     fontWeight: FontWeight.w600,
-                //   ),
-                // ),
-              ],
             ),
 
             16.verticalSpace,
