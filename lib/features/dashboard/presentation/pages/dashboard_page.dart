@@ -64,20 +64,22 @@ class DashboardPage extends StatelessWidget {
                               title: 'Total\nStudents',
                               count: totalStudents.toString(),
                               icon: Icons.people,
-                              iconColor: AppColors.chart1,
-                              iconBackgroundColor: AppColors.chart1,
-                              iconBorderColor: AppColors.chart1,
+                              iconColor: Colors.blue,
+                              iconBackgroundColor: Colors.blue.withOpacity(
+                                0.15,
+                              ),
+                              iconBorderColor: Colors.blue,
                             ),
                             8.horizontalSpace,
-
                             ShowInfoCard(
                               title: 'Attendance\ntoday',
-
                               count: attendanceTOday.length.toString(),
                               icon: Icons.calendar_today_outlined,
-                              iconColor: AppColors.chart2,
-                              iconBackgroundColor: AppColors.chart2,
-                              iconBorderColor: AppColors.chart2,
+                              iconColor: Colors.orange,
+                              iconBackgroundColor: Colors.orange.withOpacity(
+                                0.15,
+                              ),
+                              iconBorderColor: Colors.orange,
                             ),
                           ],
                         ),
@@ -85,20 +87,24 @@ class DashboardPage extends StatelessWidget {
                           children: [
                             ShowInfoCard(
                               title: 'Active\nSubscriptions',
-                              count: '5',
+                              count:
+                                  '${students.where((s) => s.subscriptionStatus == 'active').length}',
                               icon: Icons.payment,
-                              iconColor: AppColors.chart1,
-                              iconBackgroundColor: AppColors.chart1,
-                              iconBorderColor: AppColors.chart1,
+                              iconColor: Colors.green,
+                              iconBackgroundColor: Colors.green.withOpacity(
+                                0.15,
+                              ),
+                              iconBorderColor: Colors.green,
                             ),
                             8.horizontalSpace,
                             ShowInfoCard(
                               title: 'Expired\nSubscriptions',
-                              count: '20',
+                              count:
+                                  '${students.where((s) => s.subscriptionStatus == 'expired').length}',
                               icon: Icons.warning_amber_rounded,
-                              iconColor: AppColors.destructive,
-                              iconBackgroundColor: AppColors.destructive,
-                              iconBorderColor: AppColors.destructive,
+                              iconColor: Colors.red,
+                              iconBackgroundColor: Colors.red.withOpacity(0.15),
+                              iconBorderColor: Colors.red,
                             ),
                           ],
                         ),
@@ -122,36 +128,82 @@ class DashboardPage extends StatelessWidget {
                           Divider(thickness: 2, color: AppColors.border),
                           ListView.separated(
                             shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
                             itemCount: students.length > 5
                                 ? 5
                                 : students.length,
                             separatorBuilder: (_, index) =>
                                 Divider(color: AppColors.border),
                             itemBuilder: (context, index) {
+                              final student = state.students[index];
+
                               return Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 12.r,
                                   vertical: 8.h,
                                 ),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      state.students[index].name,
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        color: AppColors.accent,
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          Flexible(
+                                            child: Text(
+                                              student.name,
+                                              style: TextStyle(
+                                                fontSize: 14.sp,
+                                                color: AppColors
+                                                    .destructiveForeground,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          SizedBox(width: 10.w),
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 8.w,
+                                              vertical: 4.h,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  student.subscriptionStatus ==
+                                                      'active'
+                                                  ? Colors.green.withOpacity(
+                                                      0.2,
+                                                    )
+                                                  : Colors.red.withOpacity(0.2),
+                                              borderRadius:
+                                                  BorderRadius.circular(4.r),
+                                            ),
+                                            child: Text(
+                                              student.subscriptionStatus,
+                                              style: TextStyle(
+                                                fontSize: 12.sp,
+                                                color:
+                                                    student.subscriptionStatus ==
+                                                        'active'
+                                                    ? Colors.green
+                                                    : Colors.red,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const Spacer(),
 
+                                    const SizedBox(width: 8),
+
+                                    // التاريخ
                                     Text(
-                                      timeago.format(
-                                        state.students[index].createdAt,
-                                      ),
+                                      timeago.format(student.createdAt),
                                       style: TextStyle(
-                                        fontSize: 14.sp,
+                                        fontSize: 12.sp,
                                         color: AppColors.border,
                                       ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ],
                                 ),
