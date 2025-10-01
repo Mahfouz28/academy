@@ -41,8 +41,8 @@ class AppRouter {
       case Routes.subscriptions:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => SubscriptionsCubit(),
-            child: const SubscriptionsPage(),
+            create: (context) => SubscriptionsCubit()..getAllStudents(),
+            child: SubscriptionsPage(),
           ),
         );
 
