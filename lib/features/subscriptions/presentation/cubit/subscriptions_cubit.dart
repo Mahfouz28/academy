@@ -46,4 +46,25 @@ class SubscriptionsCubit extends Cubit<SubscriptionsState> {
       );
     }
   }
+
+  /// Expire all subscriptions
+  Future<void> expireAllSubscriptions() async {
+    emit(ExpireAllSubscriptionsLoading());
+    try {
+      await supabaseRepo.expireAllSubscriptions();
+      emit(
+        ExpireAllSubscriptionsSuccess(
+          "All subscriptions expired successfully!",
+        ),
+      );
+      getAllStudents(); // Refresh the list after expiring all
+    } catch (e) {
+      print("ExpireAllSubscriptions error: $e");
+      emit(
+        ExpireAllSubscriptionsError(
+          "Failed to expire all subscriptions. Please try again later.",
+        ),
+      );
+    }
+  }
 }

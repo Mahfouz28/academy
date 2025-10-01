@@ -140,4 +140,17 @@ class SupanaseRepo {
         .eq('subscription_status', 'expired');
     return response.map((e) => Student.fromJson(e)).toList();
   }
+
+  // Expaierd all sups
+
+  Future<void> expireAllSubscriptions() async {
+    try {
+      await supabase
+          .from('students')
+          .update({'subscription_status': 'expired'})
+          .neq('subscription_status', 'expired');
+    } catch (e) {
+      throw Exception("Error expiring all subscriptions: $e");
+    }
+  }
 }

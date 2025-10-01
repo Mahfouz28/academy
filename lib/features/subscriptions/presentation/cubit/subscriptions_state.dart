@@ -38,3 +38,15 @@ class RenewSubscriptionsSuccess extends SubscriptionsState {
     this.expiredStudents,
   );
 }
+
+class ExpireAllSubscriptionsLoading extends SubscriptionsState {}
+
+class ExpireAllSubscriptionsError extends SubscriptionsState {
+  final String message;
+  ExpireAllSubscriptionsError(this.message);
+}
+
+class ExpireAllSubscriptionsSuccess extends SubscriptionsState {
+  final String message;
+  ExpireAllSubscriptionsSuccess(this.message);
+}
