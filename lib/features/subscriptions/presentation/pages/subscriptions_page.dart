@@ -66,8 +66,6 @@ class SubscriptionsPage extends StatelessWidget {
                   ? state.allStudents
                   : (state is RenewSubscriptionsSuccess)
                   ? state.allStudents
-                  : (state is SubscriptionsSummaryLoaded)
-                  ? state.allStudents
                   : (state is ExpireAllSubscriptionsSuccess)
                   ? []
                   : [];
@@ -105,58 +103,67 @@ class SubscriptionsPage extends StatelessWidget {
 
                     16.verticalSpace,
 
+                    /// First row (Total Students + Active Subscriptions)
                     Row(
                       children: [
-                        ShowInfoCard(
-                          title: 'Total\nStudents',
-                          count: '${students.length}',
-                          countColor: AppColors.accent,
-                          icon: Icons.people_alt_rounded,
-                          iconColor: AppColors.accent,
-                          iconBackgroundColor: AppColors.accent.withOpacity(
-                            0.1,
+                        Expanded(
+                          child: ShowInfoCard(
+                            title: 'Total\nStudents',
+                            count: '${students.length}',
+                            countColor: AppColors.accent,
+                            icon: Icons.people_alt_rounded,
+                            iconColor: AppColors.accent,
+                            iconBackgroundColor: AppColors.accent.withOpacity(
+                              0.1,
+                            ),
+                            iconBorderColor: AppColors.accent,
                           ),
-                          iconBorderColor: AppColors.accent,
                         ),
                         12.horizontalSpace,
-                        ShowInfoCard(
-                          title: 'Active\nSubscriptions',
-                          count:
-                              '${students.where((s) => s.subscriptionStatus == 'active').length}',
-                          countColor: Colors.green,
-                          icon: Icons.check_circle,
-                          iconColor: Colors.green,
-                          iconBackgroundColor: Colors.green.withOpacity(0.1),
-                          iconBorderColor: Colors.green,
+                        Expanded(
+                          child: ShowInfoCard(
+                            title: 'Active\nSubscriptions',
+                            count:
+                                '${students.where((s) => s.subscriptionStatus == 'active').length}',
+                            countColor: Colors.green,
+                            icon: Icons.check_circle,
+                            iconColor: Colors.green,
+                            iconBackgroundColor: Colors.green.withOpacity(0.1),
+                            iconBorderColor: Colors.green,
+                          ),
                         ),
                       ],
                     ),
 
                     12.verticalSpace,
 
+                    /// Second row (Expired + Monthly Revenue)
                     Row(
                       children: [
-                        ShowInfoCard(
-                          title: 'Expired',
-                          count: '${expiredSubscriptions.length}',
-                          countColor: Colors.red,
-                          icon: Icons.cancel_rounded,
-                          iconColor: Colors.red,
-                          iconBackgroundColor: Colors.red.withOpacity(0.1),
-                          iconBorderColor: Colors.red,
+                        Expanded(
+                          child: ShowInfoCard(
+                            title: 'Expired',
+                            count: '${expiredSubscriptions.length}',
+                            countColor: Colors.red,
+                            icon: Icons.cancel_rounded,
+                            iconColor: Colors.red,
+                            iconBackgroundColor: Colors.red.withOpacity(0.1),
+                            iconBorderColor: Colors.red,
+                          ),
                         ),
                         12.horizontalSpace,
-                        ShowInfoCard(
-                          title: 'Monthly\nRevenue',
-                          count:
-                              '\$ ${students.where((s) => s.subscriptionStatus == 'active').length * 140}',
-                          countColor: Colors.orangeAccent,
-                          icon: Icons.monetization_on,
-                          iconColor: Colors.orangeAccent,
-                          iconBackgroundColor: Colors.orangeAccent.withOpacity(
-                            0.1,
+                        Expanded(
+                          child: ShowInfoCard(
+                            title: 'Monthly\nRevenue',
+                            count:
+                                '\$ ${students.where((s) => s.subscriptionStatus == 'active').length * 140}',
+                            countColor: Colors.orangeAccent,
+                            icon: Icons.monetization_on,
+                            iconColor: Colors.orangeAccent,
+                            iconBackgroundColor: Colors.orangeAccent
+                                .withOpacity(0.1),
+                            iconBorderColor: Colors.orangeAccent,
                           ),
-                          iconBorderColor: Colors.orangeAccent,
                         ),
                       ],
                     ),

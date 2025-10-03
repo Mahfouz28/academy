@@ -24,45 +24,43 @@ class ShowInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: AppCard(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.r),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    softWrap: true,
-                    title,
-                    style: TextStyle(
-                      overflow: TextOverflow.visible,
-                      color: Colors.grey,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
+    return AppCard(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.r),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  softWrap: true,
+                  title,
+                  style: TextStyle(
+                    overflow: TextOverflow.visible,
+                    color: Colors.grey,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w500,
                   ),
-                  const Spacer(),
-                  DashBordCardIcon(
-                    backgroundColor: iconBackgroundColor.withOpacity(0.3),
-                    borderColor: iconBorderColor,
-                    color: iconColor,
-                    icon: icon,
-                  ),
-                ],
-              ),
-              Text(
-                count,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                  color: countColor,
                 ),
+                const Spacer(),
+                DashBordCardIcon(
+                  backgroundColor: iconBackgroundColor.withOpacity(0.3),
+                  borderColor: iconBorderColor,
+                  color: iconColor,
+                  icon: icon,
+                ),
+              ],
+            ),
+            Text(
+              count,
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+                color: countColor,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
