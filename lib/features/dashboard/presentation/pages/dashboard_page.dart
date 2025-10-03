@@ -1,3 +1,4 @@
+import 'package:academy/core/router/routs.dart';
 import 'package:academy/core/themes/app_color.dart';
 import 'package:academy/core/widgets/app_bar.dart';
 import 'package:academy/core/widgets/app_card.dart';
@@ -40,10 +41,11 @@ class DashboardPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    /// Title
                     Text(
                       'Dashboard',
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 25.sp,
                         color: AppColors.accent,
                         fontWeight: FontWeight.w500,
                       ),
@@ -55,61 +57,96 @@ class DashboardPage extends StatelessWidget {
                         fontSize: 13.sp,
                       ),
                     ),
+                    20.verticalSpace,
 
+                    /// Info Cards
                     Column(
                       children: [
                         Row(
                           children: [
-                            ShowInfoCard(
-                              title: 'Total\nStudents',
-                              count: totalStudents.toString(),
-                              icon: Icons.people,
-                              iconColor: Colors.blue,
-                              iconBackgroundColor: Colors.blue.withOpacity(
-                                0.15,
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: ShowInfoCard(
+                                  title: 'Total\nStudents',
+                                  count: totalStudents.toString(),
+                                  icon: Icons.people,
+                                  iconColor: Colors.blue,
+                                  iconBackgroundColor: Colors.blue.withOpacity(
+                                    0.15,
+                                  ),
+                                  iconBorderColor: Colors.blue,
+                                ),
                               ),
-                              iconBorderColor: Colors.blue,
                             ),
                             8.horizontalSpace,
-                            ShowInfoCard(
-                              title: 'Attendance\ntoday',
-                              count: attendanceTOday.length.toString(),
-                              icon: Icons.calendar_today_outlined,
-                              iconColor: Colors.orange,
-                              iconBackgroundColor: Colors.orange.withOpacity(
-                                0.15,
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: ShowInfoCard(
+                                  title: 'Attendance\ntoday',
+                                  count: attendanceTOday.length.toString(),
+                                  icon: Icons.calendar_today_outlined,
+                                  iconColor: Colors.orange,
+                                  iconBackgroundColor: Colors.orange
+                                      .withOpacity(0.15),
+                                  iconBorderColor: Colors.orange,
+                                ),
                               ),
-                              iconBorderColor: Colors.orange,
                             ),
                           ],
                         ),
+                        12.verticalSpace,
                         Row(
                           children: [
-                            ShowInfoCard(
-                              title: 'Active\nSubscriptions',
-                              count:
-                                  '${students.where((s) => s.subscriptionStatus == 'active').length}',
-                              icon: Icons.payment,
-                              iconColor: Colors.green,
-                              iconBackgroundColor: Colors.green.withOpacity(
-                                0.15,
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(
+                                    context,
+                                  ).pushNamed(Routes.showAndExpierdActiveSups);
+                                },
+                                child: ShowInfoCard(
+                                  title: 'Active\nSubscriptions',
+                                  count:
+                                      '${students.where((s) => s.subscriptionStatus == 'active').length}',
+                                  icon: Icons.payment,
+                                  iconColor: Colors.green,
+                                  iconBackgroundColor: Colors.green.withOpacity(
+                                    0.15,
+                                  ),
+                                  iconBorderColor: Colors.green,
+                                ),
                               ),
-                              iconBorderColor: Colors.green,
                             ),
                             8.horizontalSpace,
-                            ShowInfoCard(
-                              title: 'Expired\nSubscriptions',
-                              count:
-                                  '${students.where((s) => s.subscriptionStatus == 'expired').length}',
-                              icon: Icons.warning_amber_rounded,
-                              iconColor: Colors.red,
-                              iconBackgroundColor: Colors.red.withOpacity(0.15),
-                              iconBorderColor: Colors.red,
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(
+                                    context,
+                                  ).pushNamed(Routes.showAndExpierdActiveSups);
+                                },
+                                child: ShowInfoCard(
+                                  title: 'Expired\nSubscriptions',
+                                  count:
+                                      '${students.where((s) => s.subscriptionStatus == 'expired').length}',
+                                  icon: Icons.warning_amber_rounded,
+                                  iconColor: Colors.red,
+                                  iconBackgroundColor: Colors.red.withOpacity(
+                                    0.15,
+                                  ),
+                                  iconBorderColor: Colors.red,
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ],
                     ),
+                    20.verticalSpace,
+
+                    /// Recent Registrations
                     AppCard(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,22 +179,24 @@ class DashboardPage extends StatelessWidget {
                                   horizontal: 12.r,
                                   vertical: 8.h,
                                 ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Row(
+                                child: Flexible(
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      /// Name + Status
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Flexible(
-                                            child: Text(
-                                              student.name,
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                color: AppColors
-                                                    .destructiveForeground,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
+                                          Text(
+                                            student.name,
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                              color: AppColors
+                                                  .destructiveForeground,
                                             ),
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                           SizedBox(width: 10.w),
                                           Container(
@@ -192,20 +231,22 @@ class DashboardPage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                    ),
 
-                                    const SizedBox(width: 8),
+                                      const SizedBox(width: 8),
 
-                                    // التاريخ
-                                    Text(
-                                      timeago.format(student.createdAt),
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        color: AppColors.border,
+                                      /// Date
+                                      Flexible(
+                                        child: Text(
+                                          timeago.format(student.createdAt),
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            color: AppColors.border,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               );
                             },
