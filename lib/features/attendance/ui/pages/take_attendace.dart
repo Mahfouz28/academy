@@ -218,12 +218,11 @@ class _AttendanceState extends State<Attendance> {
               return Center(
                 child: Column(
                   children: [
-                    const Text("No Students Left! "),
                     ElevatedButton(
                       onPressed: () {
                         context.pushNamed(Routes.showAttendance);
                       },
-                      child: const Text("Go"),
+                      child: const Text("Show attindance"),
                     ),
                   ],
                 ),

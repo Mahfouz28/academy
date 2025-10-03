@@ -11,8 +11,7 @@ class AppCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 25.h),
-      padding: EdgeInsets.symmetric(vertical: 27.h),
-      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 27.h, horizontal: 16.w),
       decoration: BoxDecoration(
         color: AppColors.accentForeground,
         borderRadius: BorderRadius.circular(20.r),

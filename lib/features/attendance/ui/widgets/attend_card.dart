@@ -40,31 +40,41 @@ class AttendCard extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 16.r),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Column(
-              children: [
-                Text(
-                  studentName,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+            /// اسم الطالب + الحزام
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    studentName,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                12.verticalSpace,
-                StatusBadge(
-                  backgroundColor: statusBeltColor.withOpacity(.3),
-                  borderColor: statusBeltColor,
-                  textColor: Colors.white,
-                  text: belt,
-                ),
-              ],
+                  12.verticalSpace,
+                  StatusBadge(
+                    backgroundColor: statusBeltColor.withOpacity(.3),
+                    borderColor: statusBeltColor,
+                    textColor: Colors.white,
+                    text: belt,
+                  ),
+                ],
+              ),
             ),
+
+            12.horizontalSpace,
+
+            /// أزرار الحضور والغياب
             Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 AttendanceButton(
-                  text: "Present ",
+                  text: "Present",
                   icon: Icons.check,
                   backgroundColor: isAttend
                       ? Colors.green.withOpacity(.6)
@@ -75,7 +85,7 @@ class AttendCard extends StatelessWidget {
                 ),
                 12.verticalSpace,
                 AttendanceButton(
-                  text: "Absent ",
+                  text: "Absent",
                   icon: Icons.close,
                   backgroundColor: isAbsent
                       ? Colors.red.withOpacity(.6)

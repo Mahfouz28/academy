@@ -18,6 +18,4 @@ class DashboardCubit extends Cubit<DashboardState> {
       emit(GetAllStudentsFailure(e.toString()));
     }
   }
-
-  // get attendance students
 }

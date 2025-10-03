@@ -30,6 +30,7 @@ dependencies:
   # Splash
   flutter_native_splash: ^2.4.6
   timeago: ^3.7.1
+  dropdown_button2: ^2.3.9
 
 
 dev_dependencies:

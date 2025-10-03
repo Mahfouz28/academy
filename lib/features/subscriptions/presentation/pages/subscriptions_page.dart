@@ -42,8 +42,7 @@ class SubscriptionsPage extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            if (state is GetAllStudentsLoading ||
-                state is RenewSubscriptionsLoading) {
+            if (state is GetAllStudentsLoading) {
               return const Center(child: CircularProgressIndicator());
             }
 
@@ -56,30 +55,34 @@ class SubscriptionsPage extends StatelessWidget {
                 ),
               );
             }
-            if (state is RenewSubscriptionsError) {
-              return Center(
-                child: Text(
-                  'Subscription renewal failed: ${state.message}',
-                  style: TextStyle(color: Colors.red, fontSize: 14.sp),
-                  textAlign: TextAlign.center,
-                ),
-              );
-            }
 
-            if (state is SubscriptionsSummaryLoaded) {
-              final students = state.allStudents;
-              final expiredSubscriptions = state.expiredStudents;
+            if (state is SubscriptionsSummaryLoaded ||
+                state is RenewSubscriptionsLoading ||
+                state is RenewSubscriptionsSuccess ||
+                state is ExpireAllSubscriptionsLoading ||
+                state is ExpireAllSubscriptionsError ||
+                state is ExpireAllSubscriptionsSuccess) {
+              final students = (state is SubscriptionsSummaryLoaded)
+                  ? state.allStudents
+                  : (state is RenewSubscriptionsSuccess)
+                  ? state.allStudents
+                  : (state is ExpireAllSubscriptionsSuccess)
+                  ? []
+                  : [];
 
-              if (students.isEmpty) {
-                return const Center(child: Text('No students available.'));
-              }
+              final expiredSubscriptions = (state is SubscriptionsSummaryLoaded)
+                  ? state.expiredStudents
+                  : (state is RenewSubscriptionsSuccess)
+                  ? state.expiredStudents
+                  : (state is ExpireAllSubscriptionsSuccess)
+                  ? []
+                  : [];
 
               return SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 22.r, vertical: 16.r),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Page Title
                     Text(
                       'Subscriptions',
                       style: TextStyle(
@@ -100,66 +103,74 @@ class SubscriptionsPage extends StatelessWidget {
 
                     16.verticalSpace,
 
-                    // Info cards
+                    /// First row (Total Students + Active Subscriptions)
                     Row(
                       children: [
-                        ShowInfoCard(
-                          title: 'Total\nStudents',
-                          count: '${students.length}',
-                          countColor: AppColors.accent,
-                          icon: Icons.people_alt_rounded,
-                          iconColor: AppColors.accent,
-                          iconBackgroundColor: AppColors.accent.withOpacity(
-                            0.1,
+                        Expanded(
+                          child: ShowInfoCard(
+                            title: 'Total\nStudents',
+                            count: '${students.length}',
+                            countColor: AppColors.accent,
+                            icon: Icons.people_alt_rounded,
+                            iconColor: AppColors.accent,
+                            iconBackgroundColor: AppColors.accent.withOpacity(
+                              0.1,
+                            ),
+                            iconBorderColor: AppColors.accent,
                           ),
-                          iconBorderColor: AppColors.accent,
                         ),
                         12.horizontalSpace,
-                        ShowInfoCard(
-                          title: 'Active\nSubscriptions',
-                          count:
-                              '${students.where((s) => s.subscriptionStatus == 'active').length}',
-                          countColor: Colors.green,
-                          icon: Icons.check_circle,
-                          iconColor: Colors.green,
-                          iconBackgroundColor: Colors.green.withOpacity(0.1),
-                          iconBorderColor: Colors.green,
+                        Expanded(
+                          child: ShowInfoCard(
+                            title: 'Active\nSubscriptions',
+                            count:
+                                '${students.where((s) => s.subscriptionStatus == 'active').length}',
+                            countColor: Colors.green,
+                            icon: Icons.check_circle,
+                            iconColor: Colors.green,
+                            iconBackgroundColor: Colors.green.withOpacity(0.1),
+                            iconBorderColor: Colors.green,
+                          ),
                         ),
                       ],
                     ),
 
                     12.verticalSpace,
 
+                    /// Second row (Expired + Monthly Revenue)
                     Row(
                       children: [
-                        ShowInfoCard(
-                          title: 'Expired',
-                          count: '${expiredSubscriptions.length}',
-                          countColor: Colors.red,
-                          icon: Icons.cancel_rounded,
-                          iconColor: Colors.red,
-                          iconBackgroundColor: Colors.red.withOpacity(0.1),
-                          iconBorderColor: Colors.red,
+                        Expanded(
+                          child: ShowInfoCard(
+                            title: 'Expired',
+                            count: '${expiredSubscriptions.length}',
+                            countColor: Colors.red,
+                            icon: Icons.cancel_rounded,
+                            iconColor: Colors.red,
+                            iconBackgroundColor: Colors.red.withOpacity(0.1),
+                            iconBorderColor: Colors.red,
+                          ),
                         ),
                         12.horizontalSpace,
-                        ShowInfoCard(
-                          title: 'Monthly\nRevenue',
-                          count:
-                              '\$ ${students.where((s) => s.subscriptionStatus == 'active').length * 140}',
-                          countColor: Colors.orangeAccent,
-                          icon: Icons.monetization_on,
-                          iconColor: Colors.orangeAccent,
-                          iconBackgroundColor: Colors.orangeAccent.withOpacity(
-                            0.1,
+                        Expanded(
+                          child: ShowInfoCard(
+                            title: 'Monthly\nRevenue',
+                            count:
+                                '\$ ${students.where((s) => s.subscriptionStatus == 'active').length * 140}',
+                            countColor: Colors.orangeAccent,
+                            icon: Icons.monetization_on,
+                            iconColor: Colors.orangeAccent,
+                            iconBackgroundColor: Colors.orangeAccent
+                                .withOpacity(0.1),
+                            iconBorderColor: Colors.orangeAccent,
                           ),
-                          iconBorderColor: Colors.orangeAccent,
                         ),
                       ],
                     ),
 
                     20.verticalSpace,
 
-                    // List of subscriptions
+                    // ====== All Subscriptions Section ======
                     AppCard(
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -169,6 +180,7 @@ class SubscriptionsPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // Header
                             Row(
                               children: [
                                 Icon(
@@ -184,11 +196,96 @@ class SubscriptionsPage extends StatelessWidget {
                                     color: AppColors.foreground,
                                   ),
                                 ),
+                                const Spacer(),
+                                if (state is ExpireAllSubscriptionsLoading)
+                                  const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                else
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.refresh,
+                                          color: AppColors.accent,
+                                        ),
+                                        onPressed: () {
+                                          context
+                                              .read<SubscriptionsCubit>()
+                                              .getAllStudents();
+                                        },
+                                      ),
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.clear_all,
+                                          color: AppColors.accent,
+                                        ),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (dialogContext) => AlertDialog(
+                                              title: const Text(
+                                                'Confirm Expiration',
+                                                style: TextStyle(
+                                                  color: AppColors.foreground,
+                                                ),
+                                              ),
+                                              content: const Text(
+                                                'Are you sure you want to expire all subscriptions? This action cannot be undone.',
+                                                style: TextStyle(
+                                                  color:
+                                                      AppColors.mutedForeground,
+                                                ),
+                                              ),
+                                              backgroundColor: AppColors.card,
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                        dialogContext,
+                                                      ),
+                                                  child: const Text(
+                                                    'Cancel',
+                                                    style: TextStyle(
+                                                      color: AppColors.accent,
+                                                    ),
+                                                  ),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    context
+                                                        .read<
+                                                          SubscriptionsCubit
+                                                        >()
+                                                        .expireAllSubscriptions();
+                                                    Navigator.pop(
+                                                      dialogContext,
+                                                    );
+                                                  },
+                                                  child: const Text(
+                                                    'Expire All',
+                                                    style: TextStyle(
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
                               ],
                             ),
 
                             16.verticalSpace,
 
+                            // ====== Students list ======
                             ListView.separated(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
@@ -196,9 +293,7 @@ class SubscriptionsPage extends StatelessWidget {
                                 final student = students[index];
                                 final isLoading =
                                     state is RenewSubscriptionsLoading &&
-                                    (state as RenewSubscriptionsLoading)
-                                            .studentId ==
-                                        student.id;
+                                    (state).studentId == student.id;
 
                                 return ShowSubsCard(
                                   studentName: student.name,
@@ -208,7 +303,6 @@ class SubscriptionsPage extends StatelessWidget {
                                   endDate: DateTime.now().add(
                                     const Duration(days: 30),
                                   ),
-                                  daysRemaining: 30,
                                   studentId: student.id,
                                   onRenew: () {
                                     context
@@ -231,6 +325,7 @@ class SubscriptionsPage extends StatelessWidget {
               );
             }
 
+            // Default
             return const Center(
               child: Text(
                 'Welcome! Please load subscriptions.',

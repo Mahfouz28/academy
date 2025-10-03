@@ -23,14 +23,14 @@ class AttendanceCubit extends Cubit<AttendanceState> {
     required DateTime date,
     required String status,
   }) async {
-    emit(AttendanceLoading());
+    // emit(AttendanceLoading());
     try {
       await supabaseRepo.insertAttendance(
         studentId: studentId,
         date: date,
         status: status,
       );
-      emit(AttendanceSuccess(studentId: studentId, status: status));
+      // emit(AttendanceSuccess(studentId: studentId, status: status));
     } catch (e) {
       emit(AttendanceFailure(error: e.toString()));
     }
@@ -38,8 +38,7 @@ class AttendanceCubit extends Cubit<AttendanceState> {
 
   Future<void> saveAllAttendance({
     required DateTime date,
-    required Map<String, String>
-    studentStatusMap, // {studentId: "Present/Absent"}
+    required Map<String, String> studentStatusMap,
   }) async {
     emit(AttendanceLoading());
     try {
