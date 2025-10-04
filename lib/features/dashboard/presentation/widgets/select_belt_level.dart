@@ -3,25 +3,36 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SelectTypeSerch extends StatefulWidget {
-  const SelectTypeSerch({super.key});
+class SelectBeltLevel extends StatefulWidget {
+  const SelectBeltLevel({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _StatusDropdownState createState() => _StatusDropdownState();
+  _SelectBeltLevelState createState() => _SelectBeltLevelState();
 }
 
-class _StatusDropdownState extends State<SelectTypeSerch> {
-  final List<String> items = ['All Students', 'Active', 'Expired'];
+class _SelectBeltLevelState extends State<SelectBeltLevel> {
+  final List<String> items = [
+    'All',
+    'white',
+    'yellow',
+    'orange',
+    'green',
+    'blue',
+    'brown',
+    'black',
+  ];
 
-  String? selectedValue = 'All Students';
+  String? selectedValue = 'All';
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
         isExpanded: true,
-        hint: Text('Select Status', style: TextStyle(color: Colors.white)),
+        hint: const Text(
+          'Select Belt Level',
+          style: TextStyle(color: Colors.white),
+        ),
         value: selectedValue,
         items: items
             .map(
@@ -29,7 +40,7 @@ class _StatusDropdownState extends State<SelectTypeSerch> {
                 value: item,
                 child: Text(
                   item,
-                  style: TextStyle(fontSize: 14, color: Colors.white),
+                  style: const TextStyle(fontSize: 14, color: Colors.white),
                 ),
               ),
             )
@@ -38,29 +49,29 @@ class _StatusDropdownState extends State<SelectTypeSerch> {
           setState(() {
             selectedValue = value;
 
-            if (value == 'All Students') {
+            if (value == 'All') {
               context.read<DashboardCubit>().getAllStudents();
             } else {
-              context.read<DashboardCubit>().searchStudents(value!);
+              context.read<DashboardCubit>().filterStudentsByBelt(value!);
             }
           });
         },
         buttonStyleData: ButtonStyleData(
           height: 50,
-          padding: EdgeInsets.symmetric(horizontal: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Color(0xFF1A1D2E),
+            color: const Color(0xFF1A1D2E),
           ),
         ),
         dropdownStyleData: DropdownStyleData(
           maxHeight: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Color(0xFF0E1320),
+            color: const Color(0xFF0E1320),
           ),
         ),
-        iconStyleData: IconStyleData(
+        iconStyleData: const IconStyleData(
           icon: Icon(Icons.arrow_drop_down, color: Colors.white),
           iconSize: 24,
         ),

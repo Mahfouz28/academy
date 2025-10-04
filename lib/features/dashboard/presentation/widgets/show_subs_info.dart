@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 class ShowSubsInfo extends StatelessWidget {
   final String studentId;
   final VoidCallback onRenew;
-  final bool isLoading;
+  final bool? isLoading;
 
   final String studentName;
   final String status;
@@ -17,7 +17,7 @@ class ShowSubsInfo extends StatelessWidget {
 
   const ShowSubsInfo({
     super.key,
-    required this.isLoading,
+    this.isLoading,
     required this.studentName,
     required this.status,
     required this.startDate,

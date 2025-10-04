@@ -18,4 +18,28 @@ class DashboardCubit extends Cubit<DashboardState> {
       emit(GetAllStudentsFailure(e.toString()));
     }
   }
+
+  // sersh
+  Future<void> searchStudents(String searchTerm) async {
+    emit(SearchStudentsLoading());
+    try {
+      final response = await supabaserepo.searchStudents(searchTerm);
+      final students = response;
+      emit(SearchStudentsSuccess(students));
+    } catch (e) {
+      emit(SearchStudentsFailure(e.toString()));
+    }
+  }
+
+  // filter by belt
+  Future<void> filterStudentsByBelt(String beltLevel) async {
+    emit(FilterStudentsByBeltLoading());
+    try {
+      final response = await supabaserepo.searchStudents(beltLevel);
+      final students = response;
+      emit(FilterStudentsByBeltSuccess(students));
+    } catch (e) {
+      emit(FilterStudentsByBeltFailure(e.toString()));
+    }
+  }
 }

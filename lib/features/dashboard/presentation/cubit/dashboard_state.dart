@@ -40,3 +40,31 @@ class GetAttendanceFailure extends DashboardState {
   final String error;
   GetAttendanceFailure(this.error);
 }
+
+// serch
+class SearchStudentsLoading extends DashboardState {}
+
+class SearchStudentsSuccess extends DashboardState {
+  final students;
+
+  SearchStudentsSuccess(this.students);
+}
+
+class SearchStudentsFailure extends DashboardState {
+  final String error;
+  SearchStudentsFailure(this.error);
+}
+
+// filter by belt
+class FilterStudentsByBeltLoading extends DashboardState {}
+
+class FilterStudentsByBeltSuccess extends DashboardState {
+  final students;
+
+  FilterStudentsByBeltSuccess(this.students);
+}
+
+class FilterStudentsByBeltFailure extends DashboardState {
+  final String error;
+  FilterStudentsByBeltFailure(this.error);
+}

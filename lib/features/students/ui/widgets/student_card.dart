@@ -8,8 +8,8 @@ class StudentCard extends StatelessWidget {
   final int age;
   final String phone;
   final List<StatusBadge> badges;
-  final CustomActionButton editButton;
-  final CustomActionButton deleteButton;
+  final CustomActionButton? editButton;
+  final CustomActionButton? deleteButton;
   final Color backgroundColor;
   final Color borderColor;
 
@@ -19,8 +19,8 @@ class StudentCard extends StatelessWidget {
     required this.age,
     required this.phone,
     required this.badges,
-    required this.editButton,
-    required this.deleteButton,
+    this.editButton,
+    this.deleteButton,
     this.backgroundColor = const Color(0xFF1F2937),
     this.borderColor = const Color(0xFF374151),
   });
@@ -28,14 +28,14 @@ class StudentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
+      margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 22.w),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(color: borderColor),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -72,7 +72,7 @@ class StudentCard extends StatelessWidget {
               ],
             ),
             10.verticalSpace,
-            Row(children: [editButton, 12.horizontalSpace, deleteButton]),
+            Row(children: [?editButton, 12.horizontalSpace, ?deleteButton]),
           ],
         ),
       ),

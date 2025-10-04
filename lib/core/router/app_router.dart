@@ -5,6 +5,7 @@ import 'package:academy/features/attendance/ui/pages/take_attendace.dart';
 import 'package:academy/features/dashboard/presentation/cubit/dashboard_cubit.dart';
 import 'package:academy/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:academy/features/dashboard/presentation/pages/show_active_and_expired_sups.dart';
+import 'package:academy/features/dashboard/presentation/pages/total_student_dashboard_page.dart';
 import 'package:academy/features/students/logic/cubit/student_cubit.dart';
 import 'package:academy/features/students/ui/page/add_student.dart';
 import 'package:academy/features/students/ui/page/students.dart';
@@ -39,9 +40,20 @@ class AppRouter {
           ),
         );
 
+      case Routes.totalStudents:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => DashboardCubit()..getAllStudents(),
+            child: const TotalStudentDashboardPage(),
+          ),
+        );
+
       case Routes.showAndExpierdActiveSups:
         return MaterialPageRoute(
-          builder: (_) => const ShowActiveAndExpiredSups(),
+          builder: (_) => BlocProvider(
+            create: (context) => DashboardCubit()..getAllStudents(),
+            child: const ShowActiveAndExpiredSups(),
+          ),
         );
 
       case Routes.subscriptions:

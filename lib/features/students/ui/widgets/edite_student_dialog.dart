@@ -56,7 +56,7 @@ class _EditStudentDialogState extends State<EditStudentDialog> {
             ),
             16.verticalSpace,
             DropdownButtonFormField<String>(
-              value: beltLevel,
+              initialValue: beltLevel,
               decoration: const InputDecoration(labelText: "Belt Level"),
               items:
                   [
@@ -82,7 +82,7 @@ class _EditStudentDialogState extends State<EditStudentDialog> {
             ),
             16.verticalSpace,
             DropdownButtonFormField<String>(
-              value: subscriptionStatus,
+              initialValue: subscriptionStatus,
               decoration: const InputDecoration(
                 labelText: "Subscription Status",
               ),

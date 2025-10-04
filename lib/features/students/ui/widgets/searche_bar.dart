@@ -1,5 +1,5 @@
 import 'package:academy/core/themes/app_color.dart';
-import 'package:academy/features/students/logic/cubit/student_cubit.dart';
+import 'package:academy/features/dashboard/presentation/cubit/dashboard_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +21,11 @@ class SearcheBar extends StatelessWidget {
       ),
       child: TextFormField(
         onChanged: (value) {
-          context.read<StudentCubit>().searchStudents(value);
+          if (value.isEmpty) {
+            context.read<DashboardCubit>().getAllStudents();
+          } else {
+            context.read<DashboardCubit>().searchStudents(value);
+          }
         },
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.search, color: AppColors.accent),

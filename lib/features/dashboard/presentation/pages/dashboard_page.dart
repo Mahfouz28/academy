@@ -1,3 +1,4 @@
+import 'package:academy/core/helpers/navigat.dart';
 import 'package:academy/core/router/routs.dart';
 import 'package:academy/core/themes/app_color.dart';
 import 'package:academy/core/widgets/app_bar.dart';
@@ -66,7 +67,9 @@ class DashboardPage extends StatelessWidget {
                           children: [
                             Expanded(
                               child: GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  context.pushNamed(Routes.totalStudents);
+                                },
                                 child: ShowInfoCard(
                                   title: 'Total\nStudents',
                                   count: totalStudents.toString(),
@@ -82,7 +85,9 @@ class DashboardPage extends StatelessWidget {
                             8.horizontalSpace,
                             Expanded(
                               child: GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  context.pushNamed(Routes.showAttendance);
+                                },
                                 child: ShowInfoCard(
                                   title: 'Attendance\ntoday',
                                   count: attendanceTOday.length.toString(),
@@ -179,74 +184,70 @@ class DashboardPage extends StatelessWidget {
                                   horizontal: 12.r,
                                   vertical: 8.h,
                                 ),
-                                child: Flexible(
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      /// Name + Status
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            student.name,
-                                            style: TextStyle(
-                                              fontSize: 14.sp,
-                                              color: AppColors
-                                                  .destructiveForeground,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          SizedBox(width: 10.w),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 8.w,
-                                              vertical: 4.h,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  student.subscriptionStatus ==
-                                                      'active'
-                                                  ? Colors.green.withOpacity(
-                                                      0.2,
-                                                    )
-                                                  : Colors.red.withOpacity(0.2),
-                                              borderRadius:
-                                                  BorderRadius.circular(4.r),
-                                            ),
-                                            child: Text(
-                                              student.subscriptionStatus,
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                                color:
-                                                    student.subscriptionStatus ==
-                                                        'active'
-                                                    ? Colors.green
-                                                    : Colors.red,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-
-                                      const SizedBox(width: 8),
-
-                                      /// Date
-                                      Flexible(
-                                        child: Text(
-                                          timeago.format(student.createdAt),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    /// Name + Status
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          student.name,
                                           style: TextStyle(
-                                            fontSize: 12.sp,
-                                            color: AppColors.border,
+                                            fontSize: 14.sp,
+                                            color:
+                                                AppColors.destructiveForeground,
                                           ),
                                           overflow: TextOverflow.ellipsis,
                                         ),
+                                        SizedBox(width: 10.w),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 8.w,
+                                            vertical: 4.h,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color:
+                                                student.subscriptionStatus ==
+                                                    'active'
+                                                ? Colors.green.withOpacity(0.2)
+                                                : Colors.red.withOpacity(0.2),
+                                            borderRadius: BorderRadius.circular(
+                                              4.r,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            student.subscriptionStatus,
+                                            style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color:
+                                                  student.subscriptionStatus ==
+                                                      'active'
+                                                  ? Colors.green
+                                                  : Colors.red,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                    const SizedBox(width: 8),
+
+                                    /// Date
+                                    Flexible(
+                                      child: Text(
+                                        timeago.format(student.createdAt),
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          color: AppColors.border,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               );
                             },
