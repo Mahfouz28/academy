@@ -1,5 +1,7 @@
+import 'package:academy/features/dashboard/presentation/cubit/dashboard_cubit.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SelectTypeSerch extends StatefulWidget {
   const SelectTypeSerch({super.key});
@@ -10,14 +12,9 @@ class SelectTypeSerch extends StatefulWidget {
 }
 
 class _StatusDropdownState extends State<SelectTypeSerch> {
-  final List<String> items = [
-    'All Statuses',
-    'Active',
-    'Expiring Soon',
-    'Expired',
-  ];
+  final List<String> items = ['All Students', 'Active', 'Expired'];
 
-  String? selectedValue = 'All Statuses';
+  String? selectedValue = 'All Students';
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +37,12 @@ class _StatusDropdownState extends State<SelectTypeSerch> {
         onChanged: (value) {
           setState(() {
             selectedValue = value;
+
+            if (value == 'All Students') {
+              context.read<DashboardCubit>().getAllStudents();
+            } else {
+              context.read<DashboardCubit>().searchStudents(value!);
+            }
           });
         },
         buttonStyleData: ButtonStyleData(
@@ -47,14 +50,14 @@ class _StatusDropdownState extends State<SelectTypeSerch> {
           padding: EdgeInsets.symmetric(horizontal: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Color(0xFF1A1D2E), // لون الخلفية زي الصورة
+            color: Color(0xFF1A1D2E),
           ),
         ),
         dropdownStyleData: DropdownStyleData(
           maxHeight: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Color(0xFF0E1320), // لون القائمة
+            color: Color(0xFF0E1320),
           ),
         ),
         iconStyleData: IconStyleData(

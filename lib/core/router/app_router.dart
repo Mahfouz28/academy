@@ -41,7 +41,10 @@ class AppRouter {
 
       case Routes.showAndExpierdActiveSups:
         return MaterialPageRoute(
-          builder: (_) => const ShowActiveAndExpiredSups(),
+          builder: (_) => BlocProvider(
+            create: (context) => DashboardCubit()..getAllStudents(),
+            child: const ShowActiveAndExpiredSups(),
+          ),
         );
 
       case Routes.subscriptions:
