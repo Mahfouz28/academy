@@ -12,8 +12,6 @@ class AppTheme {
         onPrimary: AppColors.primaryForeground,
         secondary: AppColors.secondary,
         onSecondary: AppColors.secondaryForeground,
-        background: AppColors.background,
-        onBackground: AppColors.foreground,
         surface: AppColors.card,
         onSurface: AppColors.cardForeground,
         error: AppColors.destructive,

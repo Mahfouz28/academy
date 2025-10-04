@@ -225,10 +225,12 @@ Future<void> _generatePubspecYaml(
   final flutterMatch = RegExp(
     r'Flutter\s(\d+\.\d+\.\d+)',
   ).firstMatch(flutterVersionOutput);
-  final flutterVersion =
-      flutterMatch != null ? flutterMatch.group(1)! : 'unknown';
+  final flutterVersion = flutterMatch != null
+      ? flutterMatch.group(1)!
+      : 'unknown';
 
-  final pubspecContent = '''
+  final pubspecContent =
+      '''
 name: $projectName
 description: A new Flutter project with Clean Architecture by Abdalluh Essam
 # Flutter version on machine: $flutterVersion
@@ -1465,7 +1467,8 @@ class OnboardPage extends StatelessWidget {
 
 ''';
 
-String _loginScreenCode(String projectName) => '''
+String _loginScreenCode(String projectName) =>
+    '''
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:$projectName/core/routing/routes.dart';
@@ -1495,7 +1498,7 @@ class LoginScreen extends StatelessWidget {
            SizedBox(height: 8.h),
            TextButton(
              onPressed: () => Navigator.pushNamed(context, Routes.signupScreen),
-             child: const Text("Don\'t have an account? Sign up"),
+             child: const Text("Don't have an account? Sign up"),
            ),
          ],
        ),

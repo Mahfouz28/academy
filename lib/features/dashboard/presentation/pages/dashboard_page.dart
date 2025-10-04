@@ -1,3 +1,4 @@
+import 'package:academy/core/helpers/navigat.dart';
 import 'package:academy/core/router/routs.dart';
 import 'package:academy/core/themes/app_color.dart';
 import 'package:academy/core/widgets/app_bar.dart';
@@ -66,7 +67,9 @@ class DashboardPage extends StatelessWidget {
                           children: [
                             Expanded(
                               child: GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  context.pushNamed(Routes.totalStudents);
+                                },
                                 child: ShowInfoCard(
                                   title: 'Total\nStudents',
                                   count: totalStudents.toString(),
@@ -82,7 +85,9 @@ class DashboardPage extends StatelessWidget {
                             8.horizontalSpace,
                             Expanded(
                               child: GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  context.pushNamed(Routes.showAttendance);
+                                },
                                 child: ShowInfoCard(
                                   title: 'Attendance\ntoday',
                                   count: attendanceTOday.length.toString(),

@@ -8,7 +8,11 @@ class AttendancrHeader extends StatelessWidget {
   final int attend;
   final int absent;
 
-  AttendancrHeader({super.key, required this.attend, required this.absent});
+  const AttendancrHeader({
+    super.key,
+    required this.attend,
+    required this.absent,
+  });
 
   @override
   Widget build(BuildContext context) {

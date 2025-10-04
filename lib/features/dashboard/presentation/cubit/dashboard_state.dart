@@ -54,3 +54,17 @@ class SearchStudentsFailure extends DashboardState {
   final String error;
   SearchStudentsFailure(this.error);
 }
+
+// filter by belt
+class FilterStudentsByBeltLoading extends DashboardState {}
+
+class FilterStudentsByBeltSuccess extends DashboardState {
+  final students;
+
+  FilterStudentsByBeltSuccess(this.students);
+}
+
+class FilterStudentsByBeltFailure extends DashboardState {
+  final String error;
+  FilterStudentsByBeltFailure(this.error);
+}

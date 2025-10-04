@@ -7,18 +7,18 @@ class ShowInfoCard extends StatelessWidget {
   final Color? countColor;
   final String title;
   final String count;
-  final IconData icon;
-  final Color iconColor;
-  final Color iconBackgroundColor;
-  final Color iconBorderColor;
+  final IconData? icon;
+  final Color? iconColor;
+  final Color? iconBackgroundColor;
+  final Color? iconBorderColor;
   const ShowInfoCard({
     super.key,
     required this.title,
     required this.count,
-    required this.icon,
-    required this.iconColor,
-    required this.iconBackgroundColor,
-    required this.iconBorderColor,
+    this.icon,
+    this.iconColor,
+    this.iconBackgroundColor,
+    this.iconBorderColor,
     this.countColor,
   });
 
@@ -45,9 +45,9 @@ class ShowInfoCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 DashBordCardIcon(
-                  backgroundColor: iconBackgroundColor.withOpacity(0.3),
-                  borderColor: iconBorderColor,
-                  color: iconColor,
+                  backgroundColor: iconBackgroundColor ?? Colors.transparent,
+                  borderColor: iconBorderColor ?? Colors.transparent,
+                  color: iconColor ?? Colors.transparent,
                   icon: icon,
                 ),
               ],
